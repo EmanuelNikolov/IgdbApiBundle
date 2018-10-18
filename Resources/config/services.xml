@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- HTTP Client-->
+        <service id="GuzzleHttp\Client"/>
+
+        <!-- Standard IGDB Wrapper -->
+        <service id="en_igdb_api.wrapper" class="EN\IgdbApiBundle\Igdb\IgdbWrapper" public="true">
+            <argument type="string"/>
+            <argument type="string"/>
+            <argument type="service" id="GuzzleHttp\Client"/>
+            <argument type="service" id="en_igdb_api.parameter.collection_factory"/>
+        </service>
+
+        <!-- Parameter Builder -->
+        <service id="en_igdb_api.parameter.builder" class="EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilder" public="true"/>
+
+        <!-- Parameter Collection -->
+        <service id="en_igdb_api.parameter.collection" class="EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection" public="true">
+            <argument type="service" id="en_igdb_api.parameter.builder"/>
+        </service>
+
+        <!-- Parameter Collection Factory -->
+        <service id="en_igdb_api.parameter.collection_factory" class="EN\IgdbApiBundle\Igdb\Parameter\Factory\ParameterCollectionFactory">
+            <argument type="service" id="en_igdb_api.parameter.builder"/>
+        </service>
+
+        <!-- Aliases -->
+        <service id="EN\IgdbApiBundle\Igdb\IgdbWrapper" alias="en_igdb_api.wrapper" public="true"/>
+        <service id="EN\IgdbApiBundle\Igdb\IgdbWrapperInterface" alias="en_igdb_api.wrapper" public="true"/>
+        <service id="EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilder" alias="en_igdb_api.parameter.builder" public="true"/>
+        <service id="EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilderInterface" alias="en_igdb_api.parameter.builder" public="true"/>
+        <service id="EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection" alias="en_igdb_api.parameter.collection" public="true"/>
+    </services>
+</container>

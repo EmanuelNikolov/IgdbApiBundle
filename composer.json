@@ -1,0 +1,29 @@
+{
+    "name": "emanuilnikolov/igdb-api-bundle",
+    "description": "Symfony Wrapper for IGDB.com API.",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.1.3",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^4.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Emanuil Nikolov",
+            "email": "enikolov.intl@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EN\\IgdbApiBundle\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EN\\IgdbApiBundle\\Tests\\": "/Tests/"
+        }
+    }
+}
