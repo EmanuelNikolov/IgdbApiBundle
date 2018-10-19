@@ -29,8 +29,8 @@ class IgdbWrapperTest extends TestCase
      */
     protected function setUp()
     {
-        $baseUrl = '***REMOVED***';
-        $apiKey = '***REMOVED***';
+        $baseUrl = '';
+        $apiKey = '';
 
         $this->builder = new ParameterBuilder();
         $client = new Client();
