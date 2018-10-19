@@ -29,8 +29,8 @@ class IgdbWrapperTest extends TestCase
      */
     protected function setUp()
     {
-        $baseUrl = 'https://api-endpoint.igdb.com';
-        $apiKey = 'cc98a4d34c307d2ad83afcba4d9c2b53';
+        $baseUrl = '';
+        $apiKey = '';
 
         $this->builder = new ParameterBuilder();
         $client = new Client();
