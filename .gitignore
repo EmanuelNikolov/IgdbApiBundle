@@ -1,4 +1,5 @@
-/vendor/
 .idea
+.env
+/vendor/
 composer.lock
 phpunit.xml

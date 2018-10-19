@@ -23,8 +23,6 @@ class Configuration implements ConfigurationInterface
           ->children()
             ->scalarNode('base_url')->cannotBeEmpty()->end()
             ->scalarNode('api_key')->cannotBeEmpty()->end()
-            ->scalarNode('custom_wrapper')->defaultNull()->end()
-            ->scalarNode('custom_parameter_builder')->defaultNull()->end()
           ->end()
         ->end();
 
