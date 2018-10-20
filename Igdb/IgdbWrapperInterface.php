@@ -82,7 +82,7 @@ interface IgdbWrapperInterface
      * @return \Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function sendRequest(string $url): ResponseInterface;
+    public function sendRequest(string $url): ?ResponseInterface;
 
     /**
      * Decodes the response's body to a PHP Assoc Array.
@@ -150,9 +150,9 @@ interface IgdbWrapperInterface
 
     public function credits(ParameterBuilderInterface $paramBuilder): array;
 
-    public function external_reviews(ParameterBuilderInterface $paramBuilder): array;
+    public function externalReviews(ParameterBuilderInterface $paramBuilder): array;
 
-    public function external_review_sources(ParameterBuilderInterface $paramBuilder
+    public function externalReviewSources(ParameterBuilderInterface $paramBuilder
     ): array;
 
     public function feeds(ParameterBuilderInterface $paramBuilder): array;
@@ -177,7 +177,7 @@ interface IgdbWrapperInterface
      */
     public function games(ParameterBuilderInterface $paramBuilder): array;
 
-    public function game_engines(ParameterBuilderInterface $paramBuilder): array;
+    public function gameEngines(ParameterBuilderInterface $paramBuilder): array;
 
     /**
      * Call the game_modes endpoint.
@@ -187,7 +187,7 @@ interface IgdbWrapperInterface
      * @return array
      * @throws GuzzleException
      */
-    public function game_modes(ParameterBuilderInterface $paramBuilder): array;
+    public function gameModes(ParameterBuilderInterface $paramBuilder): array;
 
     /**
      * Call the genres endpoint.
@@ -231,8 +231,6 @@ interface IgdbWrapperInterface
      */
     public function platforms(ParameterBuilderInterface $paramBuilder): array;
 
-    public function play_times(ParameterBuilderInterface $paramBuilder): array;
-
     /**
      * Call the player_perspectives endpoint.
      *
@@ -241,7 +239,7 @@ interface IgdbWrapperInterface
      * @return array
      * @throws GuzzleException
      */
-    public function player_perspectives(ParameterBuilderInterface $paramBuilder): array;
+    public function playerPerspectives(ParameterBuilderInterface $paramBuilder): array;
 
     /**
      * Call the pulses endpoint.
@@ -253,11 +251,11 @@ interface IgdbWrapperInterface
      */
     public function pulses(ParameterBuilderInterface $paramBuilder): array;
 
-    public function pulse_groups(ParameterBuilderInterface $paramBuilder): array;
+    public function pulseGroups(ParameterBuilderInterface $paramBuilder): array;
 
-    public function pulse_sources(ParameterBuilderInterface $paramBuilder): array;
+    public function pulseSources(ParameterBuilderInterface $paramBuilder): array;
 
-    public function release_dates(ParameterBuilderInterface $paramBuilder): array;
+    public function releaseDates(ParameterBuilderInterface $paramBuilder): array;
 
     public function reviews(ParameterBuilderInterface $paramBuilder): array;
 
@@ -275,5 +273,5 @@ interface IgdbWrapperInterface
 
     public function me(ParameterBuilderInterface $paramBuilder): array;
 
-    public function game_versions(ParameterBuilderInterface $paramBuilder): array;
+    public function gameVersions(ParameterBuilderInterface $paramBuilder): array;
 }

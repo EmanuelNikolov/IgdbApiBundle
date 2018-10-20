@@ -47,7 +47,7 @@ class IgdbWrapper implements IgdbWrapperInterface
     /**
      * Wrapper's constructor.
      *
-     * @param string $key
+     * @param string $apiKey
      * @param string $baseUrl
      * @param ParameterCollectionFactory $parameterCollectionFactory
      * @param ClientInterface $client
@@ -56,11 +56,11 @@ class IgdbWrapper implements IgdbWrapperInterface
      */
     public function __construct(
       string $baseUrl,
-      string $key,
+      string $apiKey,
       ClientInterface $client,
       ParameterCollectionFactory $parameterCollectionFactory
     ) {
-        if (empty($key)) {
+        if (empty($apiKey)) {
             throw new \Exception('IGDB API key is required, please visit https://api.igdb.com/ to request a key');
         }
 
@@ -68,7 +68,7 @@ class IgdbWrapper implements IgdbWrapperInterface
             throw new \Exception('IGDB Request URL is required, please visit https://api.igdb.com/ to get your Request URL');
         }
 
-        $this->apiKey = $key;
+        $this->apiKey = $apiKey;
         $this->baseUrl = rtrim($baseUrl, '/');
         $this->parameterCollectionFactory = $parameterCollectionFactory;
         $this->httpClient = $client;
@@ -104,6 +104,17 @@ class IgdbWrapper implements IgdbWrapperInterface
         $response = $this->sendRequest($url);
 
         return $this->processResponse($response);
+    }
+
+    public function getJsonResponse(
+      string $endpoint,
+      ParameterBuilderInterface $paramBuilder
+    ): string {
+        $url = $this->getEndpoint($endpoint) . $paramBuilder->buildQueryString();
+
+        $response = $this->sendRequest($url);
+
+        return $response->getBody()->getContents();
     }
 
     /**
@@ -176,9 +187,8 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param string $url
      *
      * @return \Psr\Http\Message\ResponseInterface
-     * @throws GuzzleException
      */
-    public function sendRequest(string $url): ResponseInterface
+    public function sendRequest(string $url): ?ResponseInterface
     {
         try {
             $response = $this->httpClient->request('GET', $url, [
@@ -344,8 +354,8 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function external_reviews(ParameterBuilderInterface $paramBuilder): array
-    {
+    public function externalReviews(ParameterBuilderInterface $paramBuilder
+    ): array {
         return $this->callApi(Endpoint::EXTERNAL_REVIEWS, $paramBuilder);
     }
 
@@ -359,7 +369,8 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function external_review_sources(ParameterBuilderInterface $paramBuilder
+    public function externalReviewSources(
+      ParameterBuilderInterface $paramBuilder
     ): array {
         return $this->callApi(Endpoint::EXTERNAL_REVIEW_SOURCES, $paramBuilder);
     }
@@ -485,8 +496,8 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws GuzzleException
      */
-    public function playerPerspectives(ParameterBuilderInterface $paramBuilder): array
-    {
+    public function playerPerspectives(ParameterBuilderInterface $paramBuilder
+    ): array {
         return $this->callApi(Endpoint::PLAYER_PERSPECTIVES, $paramBuilder);
     }
 
@@ -528,24 +539,9 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function game_engines(ParameterBuilderInterface $paramBuilder): array
+    public function gameEngines(ParameterBuilderInterface $paramBuilder): array
     {
         return $this->callApi(Endpoint::GAME_ENGINES, $paramBuilder);
-    }
-
-    /**
-     * Call the game_modes endpoint.
-     *
-     * @link https://igdb.github.io/api/endpoints/game-mode/
-     *
-     * @param ParameterBuilderInterface $paramBuilder
-     *
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function game_modes(ParameterBuilderInterface $paramBuilder): array
-    {
-        return $this->callApi(Endpoint::GAME_MODES, $paramBuilder);
     }
 
     /**
@@ -564,6 +560,7 @@ class IgdbWrapper implements IgdbWrapperInterface
     }
 
     /**
+     * TODO: Create Play Times functionality
      * Call the game_modes endpoint.
      *
      * @link https://igdb.github.io/api/endpoints/game-mode/
@@ -572,11 +569,12 @@ class IgdbWrapper implements IgdbWrapperInterface
      *
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * public function playTimes(ParameterBuilderInterface $paramBuilder): array
+     * {
+     * return $this->callApi(Endpoint::PLAY_TIMES, $paramBuilder);
+     * }
      */
-    public function play_times(ParameterBuilderInterface $paramBuilder): array
-    {
-        return $this->callApi(Endpoint::PLAY_TIMES, $paramBuilder);
-    }
 
     /**
      * Call the game_modes endpoint.
@@ -588,22 +586,7 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function player_perspectives(ParameterBuilderInterface $paramBuilder): array
-    {
-        return $this->callApi(Endpoint::PLAYER_PERSPECTIVES, $paramBuilder);
-    }
-
-    /**
-     * Call the game_modes endpoint.
-     *
-     * @link https://igdb.github.io/api/endpoints/game-mode/
-     *
-     * @param ParameterBuilderInterface $paramBuilder
-     *
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function pulse_groups(ParameterBuilderInterface $paramBuilder): array
+    public function pulseGroups(ParameterBuilderInterface $paramBuilder): array
     {
         return $this->callApi(Endpoint::PULSE_GROUPS, $paramBuilder);
     }
@@ -618,7 +601,7 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function pulse_sources(ParameterBuilderInterface $paramBuilder): array
+    public function pulseSources(ParameterBuilderInterface $paramBuilder): array
     {
         return $this->callApi(Endpoint::PULSE_SOURCES, $paramBuilder);
     }
@@ -633,7 +616,7 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function release_dates(ParameterBuilderInterface $paramBuilder): array
+    public function releaseDates(ParameterBuilderInterface $paramBuilder): array
     {
         return $this->callApi(Endpoint::RELEASE_DATES, $paramBuilder);
     }
@@ -693,7 +676,7 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function game_versions(ParameterBuilderInterface $paramBuilder): array
+    public function gameVersions(ParameterBuilderInterface $paramBuilder): array
     {
         return $this->callApi(Endpoint::GAME_VERSIONS, $paramBuilder);
     }
