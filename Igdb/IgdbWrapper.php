@@ -5,10 +5,10 @@ namespace EN\IgdbApiBundle\Igdb;
 use EN\IgdbApiBundle\Exception\ScrollHeaderNotFoundException;
 use EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection;
 use EN\IgdbApiBundle\Igdb\Parameter\Factory\ParameterCollectionFactory;
+use EN\IgdbApiBundle\Igdb\Parameter\Factory\ParameterCollectionFactoryInterface;
 use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilderInterface;
 use EN\IgdbApiBundle\Igdb\ValidEndpoints as Endpoint;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -47,10 +47,11 @@ class IgdbWrapper implements IgdbWrapperInterface
     /**
      * Wrapper's constructor.
      *
-     * @param string $apiKey
      * @param string $baseUrl
-     * @param ParameterCollectionFactory $parameterCollectionFactory
+     * @param string $apiKey
      * @param ClientInterface $client
+     *
+     * @param ParameterCollectionFactoryInterface $parameterCollectionFactory
      *
      * @throws \Exception
      */
@@ -58,7 +59,7 @@ class IgdbWrapper implements IgdbWrapperInterface
       string $baseUrl,
       string $apiKey,
       ClientInterface $client,
-      ParameterCollectionFactory $parameterCollectionFactory
+      ParameterCollectionFactoryInterface $parameterCollectionFactory
     ) {
         if (empty($apiKey)) {
             throw new \Exception('IGDB API key is required, please visit https://api.igdb.com/ to request a key');
@@ -93,7 +94,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function callApi(
       string $endpoint,
@@ -125,7 +125,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function search(
       string $search,
@@ -146,7 +145,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      *
      * @return array
      * @throws ScrollHeaderNotFoundException
-     * @throws GuzzleException
      */
     public function scroll(ResponseInterface $response = null): array
     {
@@ -276,7 +274,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function achievements(ParameterBuilderInterface $paramBuilder): array
     {
@@ -291,7 +288,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function characters(ParameterBuilderInterface $paramBuilder): array
     {
@@ -306,7 +302,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function collections(ParameterBuilderInterface $paramBuilder): array
     {
@@ -321,7 +316,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function companies(ParameterBuilderInterface $paramBuilder): array
     {
@@ -337,7 +331,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function credits(ParameterBuilderInterface $paramBuilder): array
     {
@@ -352,7 +345,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function externalReviews(ParameterBuilderInterface $paramBuilder
     ): array {
@@ -367,7 +359,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function externalReviewSources(
       ParameterBuilderInterface $paramBuilder
@@ -384,7 +375,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function feeds(ParameterBuilderInterface $paramBuilder): array
     {
@@ -399,7 +389,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function franchises(ParameterBuilderInterface $paramBuilder): array
     {
@@ -414,7 +403,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function games(ParameterBuilderInterface $paramBuilder): array
     {
@@ -429,7 +417,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function gameModes(ParameterBuilderInterface $paramBuilder): array
     {
@@ -442,7 +429,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function genres(ParameterBuilderInterface $paramBuilder): array
     {
@@ -455,7 +441,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function keywords(ParameterBuilderInterface $paramBuilder): array
     {
@@ -468,7 +453,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function people(ParameterBuilderInterface $paramBuilder): array
     {
@@ -481,7 +465,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function platforms(ParameterBuilderInterface $paramBuilder): array
     {
@@ -494,7 +477,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function playerPerspectives(ParameterBuilderInterface $paramBuilder
     ): array {
@@ -507,7 +489,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function pulses(ParameterBuilderInterface $paramBuilder): array
     {
@@ -522,7 +503,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws GuzzleException
      */
     public function themes(ParameterBuilderInterface $paramBuilder): array
     {
@@ -537,7 +517,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function gameEngines(ParameterBuilderInterface $paramBuilder): array
     {
@@ -552,7 +531,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function pages(ParameterBuilderInterface $paramBuilder): array
     {
@@ -584,7 +562,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function pulseGroups(ParameterBuilderInterface $paramBuilder): array
     {
@@ -599,7 +576,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function pulseSources(ParameterBuilderInterface $paramBuilder): array
     {
@@ -614,7 +590,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function releaseDates(ParameterBuilderInterface $paramBuilder): array
     {
@@ -629,7 +604,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function reviews(ParameterBuilderInterface $paramBuilder): array
     {
@@ -644,7 +618,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function titles(ParameterBuilderInterface $paramBuilder): array
     {
@@ -659,7 +632,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function me(ParameterBuilderInterface $paramBuilder): array
     {
@@ -674,7 +646,6 @@ class IgdbWrapper implements IgdbWrapperInterface
      * @param ParameterBuilderInterface $paramBuilder
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function gameVersions(ParameterBuilderInterface $paramBuilder): array
     {

@@ -7,7 +7,7 @@ use EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection;
 use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilder;
 use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilderInterface;
 
-class ParameterCollectionFactory
+class ParameterCollectionFactory implements ParameterCollectionFactoryInterface
 {
 
     /**

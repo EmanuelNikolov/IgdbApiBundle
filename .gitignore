@@ -1,5 +1,6 @@
 .idea
 .env
 /vendor/
+/Tests/cache
 composer.lock
 phpunit.xml

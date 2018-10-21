@@ -24,7 +24,7 @@
         </service>
 
         <!-- Parameter Collection Factory -->
-        <service id="en_igdb_api.parameter.collection_factory" class="EN\IgdbApiBundle\Igdb\Parameter\Factory\ParameterCollectionFactory">
+        <service id="en_igdb_api.parameter.collection_factory" class="EN\IgdbApiBundle\Igdb\Parameter\Factory\ParameterCollectionFactory" public="false">
             <argument type="service" id="en_igdb_api.parameter.builder"/>
         </service>
 
@@ -34,5 +34,6 @@
         <service id="EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilder" alias="en_igdb_api.parameter.builder" public="true"/>
         <service id="EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilderInterface" alias="en_igdb_api.parameter.builder" public="true"/>
         <service id="EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection" alias="en_igdb_api.parameter.collection" public="true"/>
+        <service id="EN\IgdbApiBundle\Igdb\Parameter\Factory\ParameterCollectionFactoryInterface" alias="en_igdb_api.parameter.collection_factory" public="false"/>
     </services>
 </container>
