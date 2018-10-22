@@ -9,6 +9,7 @@ use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilder;
 use EN\IgdbApiBundle\Igdb\ValidEndpoints;
 use EN\IgdbApiBundle\Tests\Igdb\Parameter\DummyCollection;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -60,7 +61,7 @@ class IgdbWrapperTest extends TestCase
     {
         $expected = '[{"id":1,"name":"Kotaku","page":501}]';
         $endpoint = ValidEndpoints::PULSE_SOURCES;
-        $result = $this->wrapper->getJsonResponse($endpoint, $this->builder->setId(1));
+        $result = $this->wrapper->fetchDataAsJson($endpoint, $this->builder->setId(1));
         $this->assertEquals($expected, $result);
     }
 
@@ -72,10 +73,16 @@ class IgdbWrapperTest extends TestCase
         $this->wrapper->getScrollHeader($response, '');
     }
 
-    public function testSendRequestExceptionHandling()
+    public function testSendRequestBadResponseExceptionHandling()
     {
         $result = $this->wrapper->sendRequest('https://api-endpoint.igdb.com/_|_/');
         $this->assertInstanceOf(ResponseInterface::class, $result);
+    }
+
+    public function testSendRequestGeneralException()
+    {
+        $this->expectException(GuzzleException::class);
+        $this->wrapper->sendRequest('not a url');
     }
 
     public function testSearch()

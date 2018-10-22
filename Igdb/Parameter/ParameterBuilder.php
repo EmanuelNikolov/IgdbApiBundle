@@ -3,6 +3,13 @@
 namespace EN\IgdbApiBundle\Igdb\Parameter;
 
 
+/**
+ * The builder is used to form the query string which will be sent to the API.
+ * It utilizes method chaining to gather the parameters' values and upon calling
+ * the buildQueryString() method - they're combined into a query string.
+ *
+ * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ */
 class ParameterBuilder implements ParameterBuilderInterface
 {
 
@@ -52,10 +59,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     private $scroll;
 
     /**
-     * Sets the expand parameter.
-     * @link https://igdb.github.io/api/references/expander/
-     * @param string $expand
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setExpand(string $expand): ParameterBuilderInterface
     {
@@ -64,13 +68,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the fields parameter.
-     *
-     * @link https://igdb.github.io/api/references/fields/
-     *
-     * @param string $fields
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setFields(string $fields): ParameterBuilderInterface
     {
@@ -79,13 +77,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the filters parameter.
-     *
-     * @link https://igdb.github.io/api/references/filters
-     *
-     * @param string $filters
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setFilters(string $filters): ParameterBuilderInterface
     {
@@ -94,12 +86,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets one Id parameter.
-     * If you want to add more at once check setIds().
-     *
-     * @param int $id
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setId(int $id): ParameterBuilderInterface
     {
@@ -108,11 +95,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets multiple comma(,) separated Id parameters.
-     *
-     * @param string $ids
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setIds(string $ids): ParameterBuilderInterface
     {
@@ -121,13 +104,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the limit parameter.
-     *
-     * @link https://igdb.github.io/api/references/pagination/#simple-pagination
-     *
-     * @param int $limit
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setLimit(int $limit): ParameterBuilderInterface
     {
@@ -136,13 +113,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the offset parameter.
-     *
-     * @link https://igdb.github.io/api/references/pagination/#simple-pagination
-     *
-     * @param int $offset
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setOffset(int $offset): ParameterBuilderInterface
     {
@@ -151,13 +122,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the order parameter.
-     *
-     * @link https://igdb.github.io/api/references/ordering/
-     *
-     * @param string $order
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setOrder(string $order): ParameterBuilderInterface
     {
@@ -166,13 +131,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the search parameter.
-     *
-     * @link https://igdb.github.io/api/examples/#search-return-certain-fields
-     *
-     * @param string $search
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setSearch(string $search): ParameterBuilderInterface
     {
@@ -181,13 +140,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Sets the scroll parameter
-     *
-     * @link https://igdb.github.io/api/references/pagination/#scroll-api
-     *
-     * @param string $scroll
-     *
-     * @return ParameterBuilderInterface
+     * {@inheritdoc}
      */
     public function setScroll(string $scroll): ParameterBuilderInterface
     {
@@ -196,9 +149,7 @@ class ParameterBuilder implements ParameterBuilderInterface
     }
 
     /**
-     * Builds the query string from the parameters.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function buildQueryString(): string
     {

@@ -7,6 +7,11 @@ use EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection;
 use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilder;
 use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilderInterface;
 
+/**
+ * A factory for user generated Parameter Collections.
+ *
+ * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ */
 class ParameterCollectionFactory implements ParameterCollectionFactoryInterface
 {
 
@@ -26,11 +31,7 @@ class ParameterCollectionFactory implements ParameterCollectionFactoryInterface
     }
 
     /**
-     * Creates an instance of the specified collection.
-     *
-     * @param string $className
-     *
-     * @return AbstractParameterCollection
+     * {@inheritdoc}
      */
     public function createCollection(string $className): AbstractParameterCollection
     {
