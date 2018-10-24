@@ -461,6 +461,13 @@ interface IgdbWrapperInterface
     public function getParameterCollection(string $className);
 
     /**
+     * Get the response from the API.
+     *
+     * @return null|ResponseInterface
+     */
+    public function getResponse(): ?ResponseInterface;
+
+    /**
      * Get the requested Scroll Header from the response (if it exists).
      *
      * @param ResponseInterface $response

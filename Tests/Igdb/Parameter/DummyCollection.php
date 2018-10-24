@@ -2,7 +2,6 @@
 
 namespace EN\IgdbApiBundle\Tests\Igdb\Parameter;
 
-
 use EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection;
 
 class DummyCollection extends AbstractParameterCollection

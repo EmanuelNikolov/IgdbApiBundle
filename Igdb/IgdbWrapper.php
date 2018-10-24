@@ -67,17 +67,17 @@ class IgdbWrapper implements IgdbWrapperInterface
       ParameterCollectionFactoryInterface $parameterCollectionFactory
     ) {
         if (empty($apiKey)) {
-            throw new \InvalidArgumentException('IGDB API key is required, please visit https://api.igdb.com/ to request a key');
+            throw new \InvalidArgumentException('IGDB API Key is required, visit https://api.igdb.com/ to get it.');
         }
 
         if (empty($baseUrl)) {
-            throw new \InvalidArgumentException('IGDB Request URL is required, please visit https://api.igdb.com/ to get your Request URL');
+            throw new \InvalidArgumentException('IGDB Request URL is required, visit https://api.igdb.com/ to get it.');
         }
 
-        $this->apiKey = $apiKey;
         $this->baseUrl = rtrim($baseUrl, '/');
-        $this->parameterCollectionFactory = $parameterCollectionFactory;
+        $this->apiKey = $apiKey;
         $this->httpClient = $client;
+        $this->parameterCollectionFactory = $parameterCollectionFactory;
     }
 
     /**
