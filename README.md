@@ -10,6 +10,7 @@ You can contribute to the project via a pull request.
   * `symfony/dependency-injection: ^4.0`
   * `symfony/http-kernel: ^4.0`)
 * [Guzzle](http://docs.guzzlephp.org/en/stable/) 6.3 or above
+
 The Symfony bundles and Guzzle are automatically included by Composer.
 ## Composer
 To get the latest version of the bundle through Composer, run the command:
@@ -51,7 +52,7 @@ en_igdb_api:
 It will also update your `.gitignore` file, so that your credentials do not accidentally leak.
 ## Using your credentials
 First, replace `YOUR_BASE_URL` and `YOUR_API_KEY` with your own credentials,
-which can be found at the [IGDB API's homepage](https://api.igdb.com/) (logged in required).
+which can be found at the [IGDB API's homepage](https://api.igdb.com/) (you have to be logged in).
 # Usage
 ## Available Services
 * Wrapper
@@ -92,20 +93,30 @@ class IgdbController extends AbstractController
     }
 }
 ```
-*To achieve greater flexibility, it is advised to type hint the desired service interface instead of the actual implementation.*
+*To achieve greater flexibility, it is advised to type hint the desired service's interface instead of the actual implementation.*
 ## Parameter Builder
 The builder is used to form the query string that will be sent to the API. It utilizes method chaining to gather the parameters' values. Upon calling the `buildQueryString()` method (done automatically in the wrapper), they are combined into a query string.
 The available parameters are listed [here](https://igdb.github.io/api/references/). They are available as methods in the ParameterBuilder and can be chained as follows:
 #### Example
 ```php
-// When the buildQueryString() method is executed on the builder below, it will produce '1?fields=*&limit=33&offset=22'.
-$builder
-  ->setLimit(33)
-  ->setOffset(22);
+// src/Controller/IgdbController.php
+// ...
+ 
+/**
+* @Route("/index", name="index")
+*/
+public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $builder)
+{
+    $builder
+      ->setLimit(33)
+      ->setOffset(22);
+    //...
+}
 ```
 ##### Hints
 * If not explicitly defined, the default value of the `fields` parameter is '*'.
 * Use the `setIds()` method to set multiple comma-separated id's: `setIds("1,2,3")`.
+* The `buildQueryString()` method will combine all the parameters previously set in the builder into a query string. When executed on the above example, `1?fields=*&limit=33&offset=22` will be returned.
 ## Parameter Collection
 Extending the AbstractParameterCollection provides a way to store frequently used configurations of the ParameterBuilder and thus decouples it from the rest of the logic.
 #### Example
@@ -142,9 +153,10 @@ public function index(IgdbWrapperInterface $wrapper)
     // ...
 }
 ```
-## Endpoints
+## Wrapper
+### Endpoints
 The endpoints described in the [API's documentation](https://igdb.github.io/api/endpoints/) are available as methods in the IgdbWrapper. 
-All of them accept an instance of the ParameterBuilder and return a PHP Associative Array with the data.
+All of them accept an instance of the ParameterBuilder and return a PHP associative array with the data.
 The bundle utilizes the [PSR-7 Standard](https://www.php-fig.org/psr/psr-7/)
 #### Example
 ```php
@@ -170,7 +182,8 @@ public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $
     //       'id' => int 77207
     //       'name' => string 'Dune: The Battle for Arrakis' (length=28)
     
-    // After the execution of any endpoint method, the response of the API is recorded in the wrapper and can be accessed with the getResponse() method.
+    // After the execution of any endpoint method, the response of the API is recorded in the wrapper 
+    // and can be accessed with the getResponse() method.
     $response = $wrapper->getResponse();
     
     // The response implements the PSR-7 interface.
@@ -178,10 +191,10 @@ public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $
     //...
 }
 ```
-## Private Endpoints
+### Private Endpoints
 These will be introduced in the next release of the bundle.
-## Scroll API
-This a functionality provided by the IGDB API that provides a more simple and faster way to paginate your results. You can read more about it [here](https://igdb.github.io/api/references/pagination/#scroll-api).
+### Scroll API
+This is a functionality provided by the IGDB API that provides a more simple and faster way to paginate your results. You can read more about it [here](https://igdb.github.io/api/references/pagination/#scroll-api).
 #### Example
 ```php
 // src/Controller/IgdbController.php
@@ -192,28 +205,28 @@ This a functionality provided by the IGDB API that provides a more simple and fa
 */
 public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $builder)
 {
-    // This will limit the result set to 10 games and enable the scroll functionality
+    // This will limit the result set to 10 games and enable the scroll functionality.
     $builder->setLimit(10)->setScroll(1);
     
-    // The API will return 10 games and the scroll headers (X-Next-Page & X-Count) will be saved in the wrapper's $response property.
+    // The API will return 10 games and a response containing the scroll headers (X-Next-Page & X-Count).
     $gamesSetOne = $wrapper->games($builder);
     
-    // You can ommit passing in the response parameter
-    $gamesNext = $wrapper->scroll(); // The scroll() method will use the last received response to get the needed headers automatically and get the next result set.
-     
+    // You can ommit passing in the response parameter.
+    // scroll() will use the last received response to get the needed headers automatically and get the next result set.                                          
+    $gamesSetTwo = $wrapper->scroll(); 
+    
     // or you can get the response manually and pass it to the scroll() method.
-    // This way you can save the response for later use, if needed.
-    $response = $wrapper->getResponse(); // This response will contain the needed headers because they're resend with each consecutive call to the Scroll API.
-    $gamesNext = $wrapper->scroll($response);
+    // This way you can save the response for later use, if needed and
+    // will also contain the needed headers because they're resend with each consecutive call to the Scroll API.
+    $response = $wrapper->getResponse(); 
+    $gamesSetThree = $wrapper->scroll($response);
     
     // The X-Count header can be accessed with the getScrollCount() method.
-    $scrollCount = $wrapper->getScrollCount(); // Request parameter can be skipped here too.
-    
-    // $gamesNext will contain the next result set of 10 games.
+    $scrollCount = $wrapper->getScrollCount(); // Response parameter can be skipped here too.    
     // ...
 }
 ```
-## Search
+### Search
 Searching can be done by using the IgdbWrapper's `search()` method or through setting the ParameterBuilder's `setSearch()` method.
 ```php
 // src/Controller/IgdbController.php
@@ -231,7 +244,8 @@ class IgdbController extends AbstractController
      */
     public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $builder)
     {
-        // The second argument is the endpoint that will be called. All of the API's endpoints are available as constants in the ValidEndpoints class.
+        // The second argument is the endpoint that will be called. 
+        // All of the API's endpoints are available as constants in the ValidEndpoints class.
         $games = $wrapper->search("Mass Effect", ValidEndpoints::FRANCHISES, $builder);
         
         // This will produce the same as the former.
@@ -241,8 +255,8 @@ class IgdbController extends AbstractController
     }
 }
 ```
-## Other useful methods
-All the methods in IgdbWrapper are public and can be freely used. All of the methods below (except `fetchDataAsJson()`) are used internally by the endpoints' methods.
+### Other useful methods
+All the methods below (except `fetchDataAsJson()`) are used internally by the endpoints' methods.
 #### `fetchData()` 
 This method is behind each one of the endpoints' methods and can be used independently.
 ```php
@@ -250,7 +264,7 @@ This method is behind each one of the endpoints' methods and can be used indepen
 $games = $wrapper->fetchData(ValidEndpoints::GAMES, $builder);
 ```
 #### `fetchDataAsJson()`
-Same as `fetchData()`, but the native JSON response of the API is returned as a string.
+Same as `fetchData()`, but the native JSON response of the API is returned as a string, instead of a PHP associative array.
 ```php
 $charactersJson = $wrapper->fetchDataAsJson(ValidEndpoints::CHARACTERS, $builder);
 ```
@@ -258,10 +272,17 @@ $charactersJson = $wrapper->fetchDataAsJson(ValidEndpoints::CHARACTERS, $builder
 Send an HTTP Request to a given URL. This method assigns the $response property of the IgdbWrapper.
 Modifies behaviour of Guzzle's `request()` method by adhering to the good practise of still returning a response and not throwing an exception when a 4xx or a 5xx error occurs.
 ```php
-$response = $wrapper->sendRequest("https://api-endpoint.igdb.com/");
+$response = $wrapper->sendRequest("https://api-endpoint.igdb.com/non-existant"); // This will produce a 404 status code.
+
+// Because the $response implements the PSR-7 standart and Guzzle is prevented from throwing an exception
+// you have more flexibility for error handling.
+$statusCode = $response->getStatusCode(); // Get the status code.
+$reasonPhrase = $response->getReasonPhrase(); // Get the reason phrase.
+$headers = $response->getHeaders(); // Get the response's headers.
 ```
+*You can read more about the available methods for the $response [here](https://www.php-fig.org/psr/psr-7/)*
 #### `processResponse()`
-Decode the provided response's body to a PHP associative array, using `json_decode()` function.
+Decode the provided response's body to a PHP associative array, using the `json_decode()` function.
 If the API returns an unsupported by `json_decode()` type of data, it is still included into an array.
 ```php
 $response = $wrapper->getResponse;
@@ -270,5 +291,5 @@ $resultSet = $wrapper->processResponse($response);
 #### `getEndpoint()`
 Combine the base URL and the endpoint.
 ```php
-$url = $wrapper->getEndpoint(ValidEndpoints::ACHIEVEMENTS); // $url will contain "https://api-endpoint.igdb.com/achievements/"
+$url = $wrapper->getEndpoint(ValidEndpoints::ACHIEVEMENTS); // "https://api-endpoint.igdb.com/achievements/"
 ```
