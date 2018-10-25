@@ -5,13 +5,13 @@ You can contribute to the project via a pull request.
 ## Prerequisites
 * An account and a key from IGDB. [Sign up](https://api.igdb.com/signup).
 * PHP 7.1.3 or above
-* Symfony 3.4 or above. Only 3 bundles are required (not the whole framework):
-  * `symfony/config: ^4.0`
-  * `symfony/dependency-injection: ^4.0`
-  * `symfony/http-kernel: ^4.0`)
+* Symfony 3.4 or above. Only 3 core bundles are required (not the whole framework):
+  * `symfony/config: ^3.4|^4.0`
+  * `symfony/dependency-injection: ^3.4|^4.0`
+  * `symfony/http-kernel: ^3.4|^4.0`)
 * [Guzzle](http://docs.guzzlephp.org/en/stable/) 6.3 or above
 
-The Symfony bundles and Guzzle are automatically included by Composer.
+The Symfony bundles and Guzzle are automatically included by composer.
 ## Composer
 To get the latest version of the bundle through Composer, run the command:
 ```bash

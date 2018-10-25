@@ -11,8 +11,7 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^4.1",
-        "symfony/dotenv": "^4.1"
+        "symfony/phpunit-bridge": "^4.1"
     },
     "license": "MIT",
     "authors": [
