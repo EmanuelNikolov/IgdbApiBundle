@@ -18,4 +18,15 @@ class ParameterBuilderTest extends TestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    public function testClear()
+    {
+        $expected = '?fields=*';
+        $builder = new ParameterBuilder();
+        $builder->setLimit(1)->setSearch('bubata');
+
+        $builder->clear();
+
+        $this->assertEquals($expected, $builder->buildQueryString());
+    }
 }

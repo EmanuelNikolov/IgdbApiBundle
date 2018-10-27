@@ -13,7 +13,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-//use Symfony\Component\Dotenv\Dotenv;
 
 class IgdbWrapperTest extends TestCase
 {
@@ -28,17 +27,6 @@ class IgdbWrapperTest extends TestCase
      */
     private $builder;
 
-    public function __construct(
-      ?string $name = null,
-      array $data = [],
-      string $dataName = ''
-    ) {
-        parent::__construct($name, $data, $dataName);
-
-//        $dotEnv = new Dotenv();
-//        $dotEnv->load(__DIR__ . '/../../.env');
-    }
-
     protected function setUp()
     {
         $baseUrl = getenv('BASE_URL');
@@ -48,7 +36,6 @@ class IgdbWrapperTest extends TestCase
         $this->builder = new ParameterBuilder();
         $factory = new ParameterCollectionFactory($this->builder);
         $this->wrapper = new IgdbWrapper($baseUrl, $apiKey, $client, $factory);
-
     }
 
     protected function tearDown()

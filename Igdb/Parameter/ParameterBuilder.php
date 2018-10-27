@@ -169,4 +169,16 @@ class ParameterBuilder implements ParameterBuilderInterface
         // using urldecode because http_build_query encodes commas :|
         return $ids . '?' . urldecode(http_build_query($propsArr));
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear(): void
+    {
+        $props = get_object_vars($this);
+
+        foreach ($props as $key => $prop) {
+            $this->$key = null;
+        }
+    }
 }

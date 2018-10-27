@@ -12,7 +12,7 @@ interface ParameterBuilderInterface
 {
 
     /**
-     * Sets the expand parameter.
+     * Set the expand parameter.
      *
      * @link https://igdb.github.io/api/references/expander/
      *
@@ -23,7 +23,7 @@ interface ParameterBuilderInterface
     public function setExpand(string $expand): ParameterBuilderInterface;
 
     /**
-     * Sets the fields parameter.
+     * Set the fields parameter.
      *
      * @link https://igdb.github.io/api/references/fields/
      *
@@ -34,7 +34,7 @@ interface ParameterBuilderInterface
     public function setFields(string $fields): ParameterBuilderInterface;
 
     /**
-     * Sets the filters parameter.
+     * Set the filters parameter.
      *
      * @link https://igdb.github.io/api/references/filters
      *
@@ -45,7 +45,7 @@ interface ParameterBuilderInterface
     public function setFilters(string $filters): ParameterBuilderInterface;
 
     /**
-     * Sets one Id parameter.
+     * Set one Id parameter.
      * If you want to add more at once check setIds().
      *
      * @param int $id
@@ -55,7 +55,7 @@ interface ParameterBuilderInterface
     public function setId(int $id): ParameterBuilderInterface;
 
     /**
-     * Sets multiple comma(,) separated Id parameters.
+     * Set multiple comma(,) separated Id parameters.
      *
      * @param string $ids
      *
@@ -64,7 +64,7 @@ interface ParameterBuilderInterface
     public function setIds(string $ids): ParameterBuilderInterface;
 
     /**
-     * Sets the limit parameter.
+     * Set the limit parameter.
      *
      * @link https://igdb.github.io/api/references/pagination/#simple-pagination
      *
@@ -75,7 +75,7 @@ interface ParameterBuilderInterface
     public function setLimit(int $limit): ParameterBuilderInterface;
 
     /**
-     * Sets the offset parameter.
+     * Set the offset parameter.
      *
      * @link https://igdb.github.io/api/references/pagination/#simple-pagination
      *
@@ -86,7 +86,7 @@ interface ParameterBuilderInterface
     public function setOffset(int $offset): ParameterBuilderInterface;
 
     /**
-     * Sets the order parameter.
+     * Set the order parameter.
      *
      * @link https://igdb.github.io/api/references/ordering/
      *
@@ -97,7 +97,7 @@ interface ParameterBuilderInterface
     public function setOrder(string $order): ParameterBuilderInterface;
 
     /**
-     * Sets the search parameter.
+     * Set the search parameter.
      *
      * @link https://igdb.github.io/api/examples/#search-return-certain-fields
      *
@@ -108,7 +108,7 @@ interface ParameterBuilderInterface
     public function setSearch(string $search): ParameterBuilderInterface;
 
     /**
-     * Sets the scroll parameter
+     * Set the scroll parameter
      *
      * @link https://igdb.github.io/api/references/pagination/#scroll-api
      *
@@ -119,10 +119,16 @@ interface ParameterBuilderInterface
     public function setScroll(string $scroll): ParameterBuilderInterface;
 
     /**
-     * Builds the query string from the provided parameters.
+     * Build the query string from the provided parameters.
      *
      * @return string
      */
     public function buildQueryString(): string;
 
+    /**
+     * Clear the set parameters.
+     *
+     * @return void
+     */
+    public function clear(): void;
 }

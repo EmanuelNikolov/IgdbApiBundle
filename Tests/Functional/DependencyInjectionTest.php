@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-//use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -29,9 +28,6 @@ class DependencyInjectionTest extends TestCase
 
     public function testServiceWiringWithConfig()
     {
-//        $dotEnv = new Dotenv();
-//        $dotEnv->load(__DIR__ . '/../../.env');
-
         $kernel = new TestKernel([
           'base_url' => getenv('BASE_URL'),
           'api_key' => getenv('API_KEY'),
