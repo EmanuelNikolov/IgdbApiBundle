@@ -42,14 +42,16 @@ en_igdb_api:
   api_key: YOUR_API_KEY
 ```
 ## With Symfony Flex
-This bundle has a Flex recipe that will automatically add `en_igdb_api.yaml` in your `config/packages` directory:
+*I have submitted a pull request to the symfony/recipes-contrib repository and I am waiting for them to add my recipe. Until then, you will have to create the file specified below and copy it's contents yourself.*
+
+~~This bundle has a Flex recipe that will automatically add `en_igdb_api.yaml` in your `config/packages` directory:~~
 ```yaml
 # config/packages/en_igdb_api.yaml
 en_igdb_api:
   base_url: YOUR_BASE_URL
   api_key: YOUR_API_KEY
 ```
-It will also update your `.gitignore` file, so that your credentials do not accidentally leak.
+~~It will also update your `.gitignore` file, so that your credentials do not accidentally leak.~~
 ## Using your credentials
 First, replace `YOUR_BASE_URL` and `YOUR_API_KEY` with your own credentials,
 which can be found at the [IGDB API's homepage](https://api.igdb.com/) (you have to be logged in).
@@ -194,7 +196,7 @@ public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $
 ### Private Endpoints
 These will be introduced in the next release of the bundle.
 ### Scroll API
-This is a functionality provided by the IGDB API that provides a more simple and faster way to paginate your results. You can read more about it [here](https://igdb.github.io/api/references/pagination/#scroll-api).
+This is a functionality provided by the IGDB API that provides a simpler and faster way to paginate your results. You can read more about it [here](https://igdb.github.io/api/references/pagination/#scroll-api).
 #### Example
 ```php
 // src/Controller/IgdbController.php
@@ -211,23 +213,23 @@ public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $
     // The API will return 10 games and a response containing the scroll headers (X-Next-Page & X-Count).
     $gamesSetOne = $wrapper->games($builder);
     
-    // You can ommit passing in the response parameter.
-    // scroll() will use the last received response to get the needed headers automatically and get the next result set.                                          
+    // You can omit passing in the response parameter.
+    // scroll() will use the last received response to get the needed headers automatically as well as the next result set.                                          
     $gamesSetTwo = $wrapper->scroll(); 
     
     // or you can get the response manually and pass it to the scroll() method.
-    // This way you can save the response for later use, if needed and
-    // will also contain the needed headers because they're resend with each consecutive call to the Scroll API.
+    // In this way, you can save the response for later use, if needed and
+    // will also contain the needed headers because they are resent to the Scroll API with each consecutive call.
     $response = $wrapper->getResponse(); 
     $gamesSetThree = $wrapper->scroll($response);
     
-    // The X-Count header can be accessed with the getScrollCount() method.
+    // The X-Count header is accessed with the getScrollCount() method.
     $scrollCount = $wrapper->getScrollCount(); // Response parameter can be skipped here too.    
     // ...
 }
 ```
 ### Search
-Searching can be done by using the IgdbWrapper's `search()` method or through setting the ParameterBuilder's `setSearch()` method.
+Searching is done by using the IgdbWrapper's `search()` method or through setting the ParameterBuilder's `setSearch()` method.
 ```php
 // src/Controller/IgdbController.php
 namespace App\Controller;
@@ -260,7 +262,7 @@ All the methods below (except `fetchDataAsJson()`) are used internally by the en
 #### `fetchData()` 
 This method is behind each one of the endpoints' methods and can be used independently.
 ```php
-// Accepts the endpoint's name and an instance of the ParameterBuilder as it's arguments.
+// Accepts the endpoint's name and an instance of the ParameterBuilder as its arguments.
 $games = $wrapper->fetchData(ValidEndpoints::GAMES, $builder);
 ```
 #### `fetchDataAsJson()`
@@ -270,7 +272,7 @@ $charactersJson = $wrapper->fetchDataAsJson(ValidEndpoints::CHARACTERS, $builder
 ```
 #### `sendRequest()`
 Send an HTTP Request to a given URL. This method assigns the $response property of the IgdbWrapper.
-Modifies behaviour of Guzzle's `request()` method by adhering to the good practise of still returning a response and not throwing an exception when a 4xx or a 5xx error occurs.
+Modifies behaviour of Guzzle's `request()` method by adhering to the good practice of still returning a response and not throwing an exception when a 4xx or a 5xx error occurs.
 ```php
 $response = $wrapper->sendRequest("https://api-endpoint.igdb.com/non-existant"); // This will produce a 404 status code.
 
