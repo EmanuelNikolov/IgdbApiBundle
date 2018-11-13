@@ -11,7 +11,8 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^4.1"
+        "symfony/phpunit-bridge": "*",
+        "phpunit/phpunit": "6.5"
     },
     "license": "MIT",
     "authors": [

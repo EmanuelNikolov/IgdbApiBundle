@@ -89,9 +89,7 @@ class IgdbWrapper implements IgdbWrapperInterface
     ): array {
         $url = $this->getEndpoint($endpoint) . $paramBuilder->buildQueryString();
 
-        $response = $this->sendRequest($url);
-
-        return $this->processResponse($response);
+        return $this->processResponse($this->sendRequest($url));
     }
 
     /**
@@ -111,18 +109,34 @@ class IgdbWrapper implements IgdbWrapperInterface
     /**
      * {@inheritdoc}
      */
-    public function scroll(ResponseInterface $response = null): array
+    public function scroll(string $endpoint): array
     {
+        $url = $this->baseUrl . $endpoint;
+
+        return $this->processResponse($this->sendRequest($url));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scrollJson(string $endpoint): string
+    {
+        $url = $this->baseUrl . $endpoint;
+
+        return $this->sendRequest($url)->getBody()->getContents();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getScrollNextPage(
+      ResponseInterface $response = null
+    ): string {
         if (null === $response) {
             $response = $this->response;
         }
 
-        $endpoint = $this->getScrollHeader($response, self::SCROLL_NEXT_PAGE);
-        $url = $this->baseUrl . $endpoint;
-
-        $scrollResponse = $this->sendRequest($url);
-
-        return $this->processResponse($scrollResponse);
+        return $this->getScrollHeader($response, self::SCROLL_NEXT_PAGE);
     }
 
     /**

@@ -47,16 +47,42 @@ interface IgdbWrapperInterface
     ): string;
 
     /**
-     * Fetch data from the IGDB API with the scroll header from a response.
+     * Fetch the next page from a scroll endpoint.
      *
      * @link https://igdb.github.io/api/references/pagination/#scroll-api
      *
-     * @param ResponseInterface|null $response
+     * @param string $endpoint
      *
      * @return array
      * @throws ScrollHeaderNotFoundException
      */
-    public function scroll(ResponseInterface $response = null): array;
+    public function scroll(string $endpoint): array;
+
+    /**
+     * Same as scroll() but returns the native JSON response.
+     *
+     * @link https://igdb.github.io/api/references/pagination/#scroll-api
+     *
+     * @param string $endpoint
+     *
+     * @return string
+     * @throws ScrollHeaderNotFoundException
+     */
+    public function scrollJson(string $endpoint): string;
+
+    /**
+     * Get the next page URL of a scroll from a response.
+     *
+     * @link https://igdb.github.io/api/references/pagination/#scroll-api
+     *
+     * @param \Psr\Http\Message\ResponseInterface|null $response
+     *
+     * @return string
+     * @throws ScrollHeaderNotFoundException
+     */
+    public function getScrollNextPage(
+      ResponseInterface $response = null
+    ): string;
 
     /**
      * Get the scroll count from a response.
@@ -101,6 +127,7 @@ interface IgdbWrapperInterface
 
     /**
      * Fetch data from the characters endpoint.
+     *
      * @link https://igdb.github.io/api/endpoints/character/
      *
      * @param ParameterBuilderInterface $paramBuilder
@@ -466,18 +493,4 @@ interface IgdbWrapperInterface
      * @return null|ResponseInterface
      */
     public function getResponse(): ?ResponseInterface;
-
-    /**
-     * Get the requested Scroll Header from the response (if it exists).
-     *
-     * @param ResponseInterface $response
-     * @param string $header
-     *
-     * @return string
-     * @throws ScrollHeaderNotFoundException
-     */
-    public function getScrollHeader(
-      ResponseInterface $response,
-      string $header
-    ): string;
 }

@@ -210,21 +210,26 @@ public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $
     // This will limit the result set to 10 games and enable the scroll functionality.
     $builder->setLimit(10)->setScroll(1);
     
-    // The API will return 10 games and a response containing the scroll headers (X-Next-Page & X-Count).
+    // The API will return 10 games and the scroll headers (X-Next-Page & X-Count).
     $gamesSetOne = $wrapper->games($builder);
     
-    // You can omit passing in the response parameter.
-    // scroll() will use the last received response to get the needed headers automatically as well as the next result set.                                          
-    $gamesSetTwo = $wrapper->scroll(); 
+    // The X-Next-Page header is accessed with the getScrollNextPage() method.
+    // The most recent response is automatically used and can be omitted.
+    $scrollNextPageUrl = $wrapper->getScrollNextPage();
     
-    // or you can get the response manually and pass it to the scroll() method.
-    // In this way, you can save the response for later use, if needed and
-    // will also contain the needed headers because they are resent to the Scroll API with each consecutive call.
+    // The most recent received response is accessed with the getResponse() method.
     $response = $wrapper->getResponse(); 
-    $gamesSetThree = $wrapper->scroll($response);
     
+    // and can be manually passed in.
     // The X-Count header is accessed with the getScrollCount() method.
-    $scrollCount = $wrapper->getScrollCount(); // Response parameter can be skipped here too.    
+    $scrollCount = $wrapper->getScrollCount($response);
+    
+    // scroll() will use the provided URL from getScrollNextPage() to get the next result set.                                          
+    $gamesSetTwo = $wrapper->scroll($scrollNextPageUrl); 
+    
+    // The API will always send the same URL so you can repeatedly query the same URL to get the next result set.
+    $gamesSetThree = $wrapper->scroll($scrollNextPageUrl);
+    
     // ...
 }
 ```

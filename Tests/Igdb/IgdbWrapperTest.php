@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 namespace EN\IgdbApiBundle\Tests\Igdb;
 
@@ -87,6 +87,20 @@ class IgdbWrapperTest extends TestCase
         $this->assertEquals("Kotaku", $result[0]['name']);
     }
 
+    public function testGetScrollNextPage()
+    {
+        $expected = "/games/scroll/cXVlcnlBbmRGZXRjaDsxOzE5OkhBck1wUUZsUnpPUDgwMGtDN0hSdEE7MDs=";
+        $stub = $this->createMock(Response::class);
+
+        $stub
+          ->method('getHeader')
+          ->willReturn([$expected]);
+
+        $result = $this->wrapper->getScrollNextPage($stub);
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testGetScrollCount()
     {
         $stub = $this->createMock(Response::class);
@@ -112,22 +126,21 @@ class IgdbWrapperTest extends TestCase
         $this->assertEquals("Polygon", $result[0]['name']);
     }
 
-        public function testScroll()
+    public function testScroll()
     {
-        $stub = $this->createMock(Response::class);
+        $this->builder->setLimit(10)->setScroll(1);
 
-        $stub
-          ->method('getHeader')
-          ->willReturn(["/games/?order=rating&limit=10&scroll=1"]);
-
-        $resultOne = $this->wrapper->scroll($stub);
+        $resultOne = $this->wrapper->games($this->builder);
         $this->assertCount(10, $resultOne);
 
-        $resultTwo = $this->wrapper->scroll();
+        // API always returns same URL so it can be queried multiple times.
+        $newEndpoint = $this->wrapper->getScrollNextPage();
+
+        $resultTwo = $this->wrapper->scroll($newEndpoint);
         $this->assertCount(10, $resultTwo);
         $this->assertNotEquals($resultOne, $resultTwo);
 
-        $resultThree = $this->wrapper->scroll($this->wrapper->getResponse());
+        $resultThree = $this->wrapper->scroll($newEndpoint);
         $this->assertCount(10, $resultThree);
         $this->assertNotEquals($resultTwo, $resultThree);
         $this->assertNotEquals($resultOne, $resultThree);
