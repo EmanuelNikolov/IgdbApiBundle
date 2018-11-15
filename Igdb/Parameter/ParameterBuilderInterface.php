@@ -38,11 +38,15 @@ interface ParameterBuilderInterface
      *
      * @link https://igdb.github.io/api/references/filters
      *
-     * @param string $filters
+     * @param string $field
+     * @param string $postfix
      *
      * @return ParameterBuilderInterface
      */
-    public function setFilters(string $filters): ParameterBuilderInterface;
+    public function setFilters(
+      string $field,
+      string $postfix
+    ): ParameterBuilderInterface;
 
     /**
      * Set one Id parameter.

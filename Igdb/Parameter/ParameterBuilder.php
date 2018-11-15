@@ -79,9 +79,11 @@ class ParameterBuilder implements ParameterBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function setFilters(string $filters): ParameterBuilderInterface
-    {
-        $this->filters[] = $filters;
+    public function setFilters(
+      string $field,
+      string $postfix
+    ): ParameterBuilderInterface {
+        $this->filters[$field] = $postfix;
         return $this;
     }
 
@@ -157,17 +159,28 @@ class ParameterBuilder implements ParameterBuilderInterface
 
         foreach ($propsArr as $key => $prop) {
             // faster than is_array smh
-            if ((array)$prop === $prop) {
+            if ((array)$prop === $prop && $key !== 'filters') {
                 $propsArr[$key] = implode(',', $prop);
             }
         }
 
         $ids = $propsArr['ids'];
         unset($propsArr['ids']);
+
         empty($propsArr['fields']) ? $propsArr['fields'] = '*' : null;
 
+        $filters = '';
+
+        if (isset($propsArr['filters'])) {
+            foreach ($propsArr['filters'] as $field => $postfix) {
+                $filters .= "&filter{$field}={$postfix}";
+            }
+
+            unset($propsArr['filters']);
+        }
+
         // using urldecode because http_build_query encodes commas :|
-        return $ids . '?' . urldecode(http_build_query($propsArr));
+        return $ids . '?' . urldecode(http_build_query($propsArr)) . $filters;
     }
 
     /**
