@@ -34,27 +34,29 @@ class AppKernel extends Kernel
     }
 }
 ```
-and copy the following in your `app/config/config.yml` file:
+copy the following in your `app/config/config.yml` file:
 ```yaml
 # app/config/config.yml
 en_igdb_api:
-  base_url: YOUR_BASE_URL
-  api_key: YOUR_API_KEY
+    base_url: '%env(YOUR_BASE_URL)%'
+    api_key: '%env(YOUR_API_KEY)%'
 ```
+and update your `.env` file:
+   ```text
+   ...
+   ###> emanuilnikolov/igdb-api-bundle ###
+   YOUR_BASE_URL=
+   YOUR_API_KEY=
+   ###< emanuilnikolov/igdb-api-bundle ###
+   ...
+   ```
 ## With Symfony Flex
-*I have submitted a pull request to the symfony/recipes-contrib repository and I am waiting for them to add my recipe. Until then, you will have to create the file specified below and copy it's contents yourself.*
-
-~~This bundle has a Flex recipe that will automatically add `en_igdb_api.yaml` in your `config/packages` directory:~~
-```yaml
-# config/packages/en_igdb_api.yaml
-en_igdb_api:
-  base_url: YOUR_BASE_URL
-  api_key: YOUR_API_KEY
-```
-~~It will also update your `.gitignore` file, so that your credentials do not accidentally leak.~~
+This bundle has a Flex recipe that will automatically add `en_igdb_api.yaml` in your `config/packages` directory and update your `.env` file accordingly.
 ## Using your credentials
-First, replace `YOUR_BASE_URL` and `YOUR_API_KEY` with your own credentials,
+Assign `YOUR_BASE_URL` and `YOUR_API_KEY` in the .env file your own credentials,
 which can be found at the [IGDB API's homepage](https://api.igdb.com/) (you have to be logged in).
+
+*If you do not wish to use environment variables (highly recommended), you can replace the `'%env(YOUR_BASE_URL)%'` and `'%env(YOUR_API_KEY)%'`.*
 # Usage
 ## Available Services
 * Wrapper
@@ -111,7 +113,8 @@ public function index(IgdbWrapperInterface $wrapper, ParameterBuilderInterface $
 {
     $builder
       ->setLimit(33)
-      ->setOffset(22);
+      ->setOffset(22)
+      ->setFilters("[rating][gte]", "80");
     //...
 }
 ```
