@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * IgdbWrapper.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 class IgdbWrapper implements IgdbWrapperInterface
 {

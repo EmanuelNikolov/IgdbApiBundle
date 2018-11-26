@@ -10,7 +10,7 @@ use EN\IgdbApiBundle\Igdb\Parameter\ParameterBuilderInterface;
 /**
  * A factory for user generated Parameter Collections.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 class ParameterCollectionFactory implements ParameterCollectionFactoryInterface
 {

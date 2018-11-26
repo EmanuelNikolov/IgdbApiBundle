@@ -8,7 +8,7 @@ namespace EN\IgdbApiBundle\Igdb\Parameter;
  * It utilizes method chaining to gather the parameters' values and upon calling
  * the buildQueryString() method - they're combined into a query string.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 class ParameterBuilder implements ParameterBuilderInterface
 {

@@ -6,7 +6,7 @@ namespace EN\IgdbApiBundle\Igdb;
 /**
  * Class containing all the valid endpoints from the IGDB API docs.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 abstract class ValidEndpoints
 {

@@ -8,7 +8,7 @@ namespace EN\IgdbApiBundle\Igdb\Parameter;
  * configurations of the Parameter Builder and thus decouple it from the rest
  * of the logic.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 abstract class AbstractParameterCollection
 {

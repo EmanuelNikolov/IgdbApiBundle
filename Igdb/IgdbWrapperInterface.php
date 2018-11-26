@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * IgdbWrapperInterface.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 interface IgdbWrapperInterface
 {

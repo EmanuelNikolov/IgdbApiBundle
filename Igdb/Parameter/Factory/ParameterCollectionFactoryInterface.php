@@ -8,7 +8,7 @@ use EN\IgdbApiBundle\Igdb\Parameter\AbstractParameterCollection;
 /**
  * ParameterCollectionFactoryInterface.
  *
- * @author Emanuil Nikolov <enikolov.intl@gmail.com>
+ * @author Emanuel Nikolov <enikolov.intl@gmail.com>
  */
 interface ParameterCollectionFactoryInterface
 {
