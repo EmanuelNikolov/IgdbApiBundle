@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/EmanuelNikolov/IgdbApiBundle.svg?branch=master)](https://travis-ci.org/EmanuelNikolov/IgdbApiBundle)
+[![Latest Stable Version](https://poser.pugx.org/emanuilnikolov/igdb-api-bundle/v/stable)](https://packagist.org/packages/emanuilnikolov/igdb-api-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/emanuilnikolov/igdb-api-bundle/v/unstable)](https://packagist.org/packages/emanuilnikolov/igdb-api-bundle)
+[![License](https://poser.pugx.org/emanuilnikolov/igdb-api-bundle/license)](https://packagist.org/packages/emanuilnikolov/igdb-api-bundle)
+
 # IgdbApiBundle
 This bundle provides an easy way to communicate with the [Internet Game Database API](https://api.igdb.com/).
 You can contribute to the project via a pull request.
